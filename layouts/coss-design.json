@@ -187,7 +187,7 @@
   "background": "chrome",
   "theme": {
     "light": "paper",
-    "dark": "0oz"
+    "dark": "coss-design"
   },
   "terminal_padding": [
     10,

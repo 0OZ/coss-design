@@ -1,8 +1,8 @@
-# 0oz design
+# coss design
 
 A calm, neutral dark layout for the [Herdr](https://herdr.dev) app, in the spirit of shadcn's `dashboard-01` and coss ui.
 
-![0oz design](preview.png)
+![coss design](preview.png)
 
 - One rounded, thinly bordered card holds the whole work area, inset into the window.
 - A single terminal sits flush in the card. Several terminals are divided by a 1px hairline, and the focused one shows in its header, not in a bright ring.
@@ -16,11 +16,11 @@ The screenshot is a demo window with fixture repos and made-up spaces.
 Tested on Herdr 0.1.7. Copy the files into your Herdr home, then switch to the layout:
 
 ```sh
-git clone https://github.com/0OZ/0oz-design && cd 0oz-design
-cp layouts/0oz-design.json ~/.config/herdr-app/layouts/
-cp themes/0oz.json ~/.config/herdr-app/themes/
+git clone https://github.com/0OZ/coss-design && cd coss-design
+cp layouts/coss-design.json ~/.config/herdr-app/layouts/
+cp themes/coss-design.json ~/.config/herdr-app/themes/
 cp -R mods/oz-* ~/.config/herdr-app/mods/
-herdr-app do layout.switch '{"name":"0oz-design"}'
+herdr-app do layout.switch '{"name":"coss-design"}'
 ```
 
 `ctrl-shift-l` switches back to your previous layout, and deleting the copied files removes this one.

@@ -1,8 +1,8 @@
-# 0oz design
+# coss design
 
 A calm, neutral dark shell for Herdr in the spirit of shadcn's `dashboard-01` and coss ui. The sidebar and the window share one near-black colour, and the work area is a single rounded, thinly bordered card inset into the window. A lone terminal sits flush inside that card with no frame of its own. Several terminals sit side by side, split by a 1px hairline instead of cards, and the focused one is marked in its header rather than by a bright ring. Only grays and the status colours are used.
 
-![0oz design](preview.png)
+![coss design](preview.png)
 
 ## What you see
 
@@ -20,7 +20,7 @@ Left to right, on a `chrome` (#0e0e0e) window:
   - Terminal area, edge to edge, text inset by `terminal_padding` [10, 8]. The Files/Changes panel, 368px (280 to 900), opens on the right, separated by the same 1px hairline. It is flat: no border or rounded corners of its own, a 42px header with a bottom hairline, then its list.
 - **Status bar**, 26px, under the card, no background of its own: machine, branch, agent count, "needs you" count, and the palette shortcut on the right.
 
-Colours (theme `0oz`): background #161616, canvas #111111, chrome #0e0e0e, surface #151515, popover #1b1b1b, raised #1e1e1e, hover #1f1f1f, selected #262626, border #242424, input #2c2c2c, foreground #f5f5f5, muted #a3a3a3, dim #7a7a7a, accent #737373. Status: working #fbbf24, blocked #f87171, done #34d399, idle #737373.
+Colours (theme `coss-design`): background #161616, canvas #111111, chrome #0e0e0e, surface #151515, popover #1b1b1b, raised #1e1e1e, hover #1f1f1f, selected #262626, border #242424, input #2c2c2c, foreground #f5f5f5, muted #a3a3a3, dim #7a7a7a, accent #737373. Status: working #fbbf24, blocked #f87171, done #34d399, idle #737373.
 
 ## How it behaves
 
@@ -33,13 +33,13 @@ Colours (theme `0oz`): background #161616, canvas #111111, chrome #0e0e0e, surfa
 
 ## Built from
 
-- Layout `0oz-design` (`layouts/0oz-design.json`), root row: `background` chrome, `theme` `{light: paper, dark: 0oz}`, `terminal_padding` [10, 8], `titlebar` none, `traffic_lights` [12, 16], no divider.
+- Layout `coss-design` (`layouts/coss-design.json`), root row: `background` chrome, `theme` `{light: paper, dark: coss-design}`, `terminal_padding` [10, 8], `titlebar` none, `traffic_lights` [12, 16], no divider.
   - `sidebar` column 256px, min 44, max 480, `chrome`, not resizable: `brand` block 48px (`oz-chrome`, `window_drag`), `sidebar-lists` column holding `spaces` (`oz-spaces`, weight 1, min 90) and `agents` (shipped `agents`, weight 1, min 90), then `sidebar-footer` block 132px (`oz-chrome` with props `{footer: true}`).
   - `work` column, padding 6, gap 4, not resizable, holding `inset` column (`background` background, radius 12, border 1px `border`, shadow `sm`) and the `status` block 26px (`oz-status`).
   - `inset` holds `tabs` block 48px (`oz-tabs`, `window_drag`) and `work-body` row (padding 0, gap 1, background `border`).
   - `work-body` holds `main` (background `border`; content `{tab: "active", pane: {...}}`) and `panel` column 368px, hidden by default, with a `panel-body` stack of the `oz-files` and `oz-changes` blocks.
   - `main`'s pane frame: `background` background, `border` width 0, `focus` width 0, `radius` 0, `gap` 1, `lone` false, header `{content: {mod: "oz-pane"}, height: 38, position: "top", reveal: "always"}`. The 1px lines between panes and between the terminal and the panel are the `border` background of `main` and `work-body` showing through the gaps.
-- Theme `0oz` (`themes/0oz.json`): the colours above plus a 16-colour ANSI palette.
+- Theme `coss-design` (`themes/coss-design.json`): the colours above plus a 16-colour ANSI palette.
 - Mods, all clones of shipped Herdr mods: `oz-tabs` (from `tabs`), `oz-pane` (from `pane`), `oz-chrome` (from `workspace-chrome`), `oz-status` (from `workspace-status`), `oz-spaces` (from `spaces`), `oz-files` (from `files`), `oz-changes` (from `changes`). The last two differ from the shipped mods in one line each: their root no longer draws its own `rounded(10)` border and card.
 - Functions and commands used: `spaces`, `agents`, `panes`, `theme`, `shared`, `setShared`, `layout`, `window`, `props`, `home`, `updates`, `openOverlay`, `run` with `space.new`, `tab.*`, `pane.*`, `layout.*`, `app.settings`, `mod.open`.
 - Shipped things it relies on: mods `agents`, `new-menu`, `menu`, `picker`; assets `frame/welcome/herdr.png`, `mods/workspace-chrome/{branch,plus,search,spinner}.svg`, `mods/pane/close.svg`, `mods/files/file.svg`, `mods/changes/changes.svg`; theme `paper` for light mode.
@@ -47,7 +47,7 @@ Colours (theme `0oz`): background #161616, canvas #111111, chrome #0e0e0e, surfa
 ## Watch out
 
 - **`oz-spaces` runs programs.** It calls `git` (`status --porcelain=v2 --branch`, `rev-parse`) in each space's folder and `hc machine ls --json`, both through `exec` and `hc`. It makes no network requests and reads nothing outside the spaces' folders.
-- Copy `themes/0oz.json` to `themes/` as well as the layout and the mods. Without it the dark half of the theme falls back.
+- Copy `themes/coss-design.json` to `themes/` as well as the layout and the mods. Without it the dark half of the theme falls back.
 - A layout file edited while the window is hidden may not repaint until you nudge the zoom (`app.zoom_in`, then `app.zoom_out`).
 - The shipped `files` and `changes` mods draw their own rounded, bordered card. Inside this layout's card that reads as a card in a card, which is why `oz-files` and `oz-changes` exist. Don't swap the shipped ones back in.
 - A single pane has no header by design (`lone: false`). Set `lone` to true and the card frame returns, along with the header.
@@ -57,7 +57,7 @@ Colours (theme `0oz`): background #161616, canvas #111111, chrome #0e0e0e, surfa
 
 ## Done when
 
-- `herdr-app check mods/<name>` passes for `oz-tabs`, `oz-pane`, `oz-chrome`, `oz-status`, `oz-spaces` and `oz-files` (`oz-changes` cannot be checked headlessly, the shipped `changes` panics in `check` too, so confirm it by opening the panel), and `herdr-app status` lists no errors after `layout.switch {name: "0oz-design"}`.
+- `herdr-app check mods/<name>` passes for `oz-tabs`, `oz-pane`, `oz-chrome`, `oz-status`, `oz-spaces` and `oz-files` (`oz-changes` cannot be checked headlessly, the shipped `changes` panics in `check` too, so confirm it by opening the panel), and `herdr-app status` lists no errors after `layout.switch {name: "coss-design"}`.
 - With one terminal, the window shows a single rounded card with no inner border and no pane header.
 - After `pane.split {direction: "right"}`, both panes have a 38px header and are separated by a 1px line, with no rounded corners and no gap.
 - The focused pane's title is #f5f5f5 and the other's is #7a7a7a.
