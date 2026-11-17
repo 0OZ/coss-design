@@ -7,7 +7,7 @@ A calm, neutral dark layout for the [Herdr](https://herdr.dev) app, in the spiri
 - One rounded, thinly bordered card holds the whole work area, inset into the window.
 - A single terminal sits flush in the card. Several terminals are divided by a 1px hairline, and the focused one shows in its header, not in a bright ring.
 - Dashboard-style sidebar: a solid **New space** button, rows with initial tiles, nested worktrees, Settings and an account chip at the bottom.
-- Tabs in a segmented pill, and flat Files and Changes panels.
+- Tabs in a segmented pill, a flat Files panel, and a Changes panel with staged and unstaged files (lazygit keys), the branch with ahead/behind, and the last three commits.
 
 The screenshot is a demo window with fixture repos and made-up spaces.
 
@@ -25,7 +25,7 @@ herdr-app do layout.switch '{"name":"coss-design"}'
 
 `ctrl-shift-l` switches back to your previous layout, and deleting the copied files removes this one.
 
-`oz-spaces` runs `git` and `hc machine ls` to show branches and machines. Nothing here makes network requests.
+`oz-spaces` runs `git` and `hc machine ls` to show branches and machines. `oz-changes` runs `git` to read changes and, when you ask it to, to stage, unstage and commit. Nothing here makes network requests.
 
 ## More
 

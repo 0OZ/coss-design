@@ -40,13 +40,14 @@ Colours (theme `coss-design`): background #161616, canvas #111111, chrome #0e0e0
   - `work-body` holds `main` (background `border`; content `{tab: "active", pane: {...}}`) and `panel` column 368px, hidden by default, with a `panel-body` stack of the `oz-files` and `oz-changes` blocks.
   - `main`'s pane frame: `background` background, `border` width 0, `focus` width 0, `radius` 0, `gap` 1, `lone` false, header `{content: {mod: "oz-pane"}, height: 38, position: "top", reveal: "always"}`. The 1px lines between panes and between the terminal and the panel are the `border` background of `main` and `work-body` showing through the gaps.
 - Theme `coss-design` (`themes/coss-design.json`): the colours above plus a 16-colour ANSI palette.
-- Mods, all clones of shipped Herdr mods: `oz-tabs` (from `tabs`), `oz-pane` (from `pane`), `oz-chrome` (from `workspace-chrome`), `oz-status` (from `workspace-status`), `oz-spaces` (from `spaces`), `oz-files` (from `files`), `oz-changes` (from `changes`). The last two differ from the shipped mods in one line each: their root no longer draws its own `rounded(10)` border and card.
+- Mods, all clones of shipped Herdr mods: `oz-tabs` (from `tabs`), `oz-pane` (from `pane`), `oz-chrome` (from `workspace-chrome`), `oz-status` (from `workspace-status`), `oz-spaces` (from `spaces`), `oz-files` (from `files`), `oz-changes` (from `changes`). `oz-files` differs from the shipped mod in one line: its root no longer draws its own `rounded(10)` border and card. `oz-changes` has the same flat root and adds staged and unstaged lists with lazygit keys (`j`/`k` move, `space` stages or unstages, `a` all, `c` commit; a commit takes only staged files), the branch with ahead/behind under the header, and the last three commits above the commit box. Its git parsing lives in `status.js`.
 - Functions and commands used: `spaces`, `agents`, `panes`, `theme`, `shared`, `setShared`, `layout`, `window`, `props`, `home`, `updates`, `openOverlay`, `run` with `space.new`, `tab.*`, `pane.*`, `layout.*`, `app.settings`, `mod.open`.
 - Shipped things it relies on: mods `agents`, `new-menu`, `menu`, `picker`; assets `frame/welcome/herdr.png`, `mods/workspace-chrome/{branch,plus,search,spinner}.svg`, `mods/pane/close.svg`, `mods/files/file.svg`, `mods/changes/changes.svg`; theme `paper` for light mode.
 
 ## Watch out
 
 - **`oz-spaces` runs programs.** It calls `git` (`status --porcelain=v2 --branch`, `rev-parse`) in each space's folder and `hc machine ls --json`, both through `exec` and `hc`. It makes no network requests and reads nothing outside the spaces' folders.
+- **`oz-changes` runs programs too.** It reads with `git status --branch`, `diff --numstat`, `diff` and `log` (no optional locks, so its own reads don't wake its folder watch), and writes only on your action: `add`, `restore --staged`, `reset`, `commit`.
 - Copy `themes/coss-design.json` to `themes/` as well as the layout and the mods. Without it the dark half of the theme falls back.
 - A layout file edited while the window is hidden may not repaint until you nudge the zoom (`app.zoom_in`, then `app.zoom_out`).
 - The shipped `files` and `changes` mods draw their own rounded, bordered card. Inside this layout's card that reads as a card in a card, which is why `oz-files` and `oz-changes` exist. Don't swap the shipped ones back in.
@@ -57,7 +58,7 @@ Colours (theme `coss-design`): background #161616, canvas #111111, chrome #0e0e0
 
 ## Done when
 
-- `herdr-app check mods/<name>` passes for `oz-tabs`, `oz-pane`, `oz-chrome`, `oz-status`, `oz-spaces` and `oz-files` (`oz-changes` cannot be checked headlessly, the shipped `changes` panics in `check` too, so confirm it by opening the panel), and `herdr-app status` lists no errors after `layout.switch {name: "coss-design"}`.
+- `herdr-app check mods/<name>` passes for `oz-tabs`, `oz-pane`, `oz-chrome`, `oz-status`, `oz-spaces`, `oz-files` and `oz-changes`, `node --test mods/oz-changes/status.test.js` passes, and `herdr-app status` lists no errors after `layout.switch {name: "coss-design"}`.
 - With one terminal, the window shows a single rounded card with no inner border and no pane header.
 - After `pane.split {direction: "right"}`, both panes have a 38px header and are separated by a 1px line, with no rounded corners and no gap.
 - The focused pane's title is #f5f5f5 and the other's is #7a7a7a.
