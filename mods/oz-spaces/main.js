@@ -323,7 +323,7 @@ export default class Spaces extends View {
           .gap(9)
           .items_center()
           .when(Boolean(tree), el => el.pl(CHILD_PAD).child(svg("mods/workspace-chrome/branch.svg").size(12).text_color(t.dim)))
-          .when(!tree, el => el.child(h_flex().size(20).flex_none().rounded(6).bg(fill).items_center().justify_center().text_size(11).font_bold().text_color("#ffffff").child(w.name[0]?.toUpperCase() ?? "?")))
+          .when(!tree, el => el.child(h_flex().size(20).flex_none().rounded(6).bg(fill).items_center().justify_center().text_size(11).font_bold().text_color("#ffffff").child([...w.name][0]?.toUpperCase() ?? "?")))
           .child(div().flex_shrink(0).max_w(150).truncate().text_color(tree && !on ? t.muted : t.foreground).when(on, (el) => el.font_medium()).child(w.name))
           .child(g ? this.gitTail(g, tree, w.name, t) : div().flex_1()),
       );
